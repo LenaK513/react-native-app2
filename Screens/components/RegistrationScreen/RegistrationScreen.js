@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -10,6 +10,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
+  Dimensions,
 } from "react-native";
 
 export default function RegistrationScreen() {
@@ -17,6 +18,19 @@ export default function RegistrationScreen() {
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
+
+  useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get("window").width;
+
+      setdimensions(width);
+    };
+    Dimensions.addEventListener("change", onChange);
+    return () => {
+      Dimensions.removeEventListener("change", onChange);
+    };
+  }, []);
 
   const keyboardHide = () => {
     setIsShowKeyboard(false);
@@ -46,7 +60,7 @@ export default function RegistrationScreen() {
               //   ...styles.form,
               //   paddingBottom: isShowKeyboard ? 45 : null,
               // }}
-              style={styles.form}
+              style={{ ...styles.form, width: dimensions }}
             >
               <View style={styles.photoBox}>
                 <Image
@@ -134,7 +148,7 @@ const styles = StyleSheet.create({
     bottom: "9%",
   },
   titleText: {
-    // fontFamily: "r-bold",
+    fontFamily: "r-bold",
     fontSize: 30,
     color: "#212121",
     textAlign: "center",
@@ -144,7 +158,7 @@ const styles = StyleSheet.create({
     marginTop: 64,
   },
   input: {
-    // fontFamily: "r-regular",
+    fontFamily: "r-regular",
     fontSize: 16,
     height: 50,
     borderRadius: 8,
@@ -158,7 +172,7 @@ const styles = StyleSheet.create({
     // marginHorizontal: 16,
   },
   inputPassword: {
-    // fontFamily: "r-regular",
+    fontFamily: "r-regular",
     fontSize: 16,
     height: 50,
     borderRadius: 8,
@@ -179,14 +193,14 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   btnTitle: {
-    // fontFamily: "r-regular",
+    fontFamily: "r-regular",
     fontWeight: "400",
     fontSize: 16,
     color: "#ffffff",
     lineHeight: 19,
   },
   loginText: {
-    // fontFamily: "r-regular",
+    fontFamily: "r-regular",
     fontWeight: "400",
     fontSize: 16,
     color: "#1B4371",
