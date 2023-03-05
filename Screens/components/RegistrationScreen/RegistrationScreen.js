@@ -18,6 +18,10 @@ export default function RegistrationScreen() {
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [hidenPassword, setHidePassword] = useState({
+    hide: true,
+    text: "Show",
+  });
 
   const keyboardHide = () => {
     setIsShowKeyboard(false);
@@ -34,6 +38,14 @@ export default function RegistrationScreen() {
   const loginHandler = (text) => setLogin(text);
   const emailHandler = (text) => setEmail(text);
   const passwordHandler = (text) => setPassword(text);
+
+  const hidePassword = () => {
+    if (hidenPassword.hide) {
+      setHidePassword({ hide: false, text: "Hide" });
+    } else {
+      setHidePassword({ hide: true, text: "Show" });
+    }
+  };
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
@@ -77,15 +89,25 @@ export default function RegistrationScreen() {
                 keyboardType="email-address"
                 onFocus={() => setIsShowKeyboard(true)}
               />
-              <TextInput
-                value={password}
-                onChangeText={passwordHandler}
-                style={styles.inputPassword}
-                secureTextEntry={true}
-                placeholder="Enter password"
-                placeholderTextColor="#BDBDBD"
-                onFocus={() => setIsShowKeyboard(true)}
-              />
+              <View>
+                <TextInput
+                  value={password}
+                  onChangeText={passwordHandler}
+                  style={styles.inputPassword}
+                  secureTextEntry={true}
+                  placeholder="Enter password"
+                  placeholderTextColor="#BDBDBD"
+                  onFocus={() => setIsShowKeyboard(true)}
+                />
+                <TouchableOpacity
+                  style={styles.showPasswordButton}
+                  onPress={hidePassword}
+                >
+                  <Text style={styles.showPasswordButton__text}>
+                    {hidenPassword.text}
+                  </Text>
+                </TouchableOpacity>
+              </View>
 
               <TouchableOpacity style={styles.btn} onPress={onLogin}>
                 <Text style={styles.btnTitle}>Sign up</Text>
@@ -161,7 +183,6 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     padding: 16,
     lineHeight: 18.75,
-    // marginHorizontal: 16,
   },
   inputPassword: {
     fontFamily: "r-regular",
@@ -174,9 +195,19 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 16,
     lineHeight: 18.75,
-    // marginBottom: 43,
   },
-
+  showPasswordButton: {
+    position: "absolute",
+    right: 16,
+    top: "30%",
+  },
+  showPasswordButton__text: {
+    fontSize: 16,
+    fontFamily: "r-regular",
+    fontWeight: "400",
+    lineHeight: 19,
+    color: "#1B4371",
+  },
   btn: {
     height: 51,
     backgroundColor: "#FF6C00",
