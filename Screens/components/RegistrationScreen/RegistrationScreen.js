@@ -1,0 +1,197 @@
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Image,
+  KeyboardAvoidingView,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
+
+export default function RegistrationScreen() {
+  const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  const [login, setLogin] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const keyboardHide = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+  };
+
+  const onLogin = () => {
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
+    console.log("credentials", `${login}+${email}+${password}`);
+    setLogin(""), setEmail(""), setPassword("");
+  };
+
+  const loginHandler = (text) => setLogin(text);
+  const emailHandler = (text) => setEmail(text);
+  const passwordHandler = (text) => setPassword(text);
+  return (
+    <TouchableWithoutFeedback onPress={keyboardHide}>
+      <View style={styles.container}>
+        <ImageBackground
+          style={styles.imageBG}
+          source={require("../../../assets/images/image.png")}
+        >
+          <KeyboardAvoidingView behavior={Platform.OS == "ios" && "padding"}>
+            <View
+              // style={{
+              //   ...styles.form,
+              //   paddingBottom: isShowKeyboard ? 45 : null,
+              // }}
+              style={styles.form}
+            >
+              <View style={styles.photoBox}>
+                <Image
+                  style={styles.iconImage}
+                  source={require("../../../assets/images/add.png")}
+                />
+              </View>
+              <Text style={styles.titleText}>{"\n"}Registration</Text>
+              <TextInput
+                value={login}
+                onChangeText={loginHandler}
+                style={styles.input}
+                placeholder="Login"
+                placeholderTextColor="#BDBDBD"
+                onFocus={() => setIsShowKeyboard(true)}
+              />
+              <TextInput
+                value={email}
+                onChangeText={emailHandler}
+                style={styles.input}
+                placeholder="Email address"
+                placeholderTextColor="#BDBDBD"
+                keyboardType="email-address"
+                onFocus={() => setIsShowKeyboard(true)}
+              />
+              <TextInput
+                value={password}
+                onChangeText={passwordHandler}
+                style={styles.inputPassword}
+                secureTextEntry={true}
+                placeholder="Enter password"
+                placeholderTextColor="#BDBDBD"
+                onFocus={() => setIsShowKeyboard(true)}
+              />
+              <TouchableOpacity style={styles.btn} onPress={onLogin}>
+                <Text style={styles.btnTitle}>Sign up</Text>
+              </TouchableOpacity>
+
+              <Text style={styles.loginText}>
+                {"\n"}
+                Have already had an account? Login
+              </Text>
+            </View>
+          </KeyboardAvoidingView>
+        </ImageBackground>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  imageBG: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "flex-end",
+  },
+  form: {
+    position: "relative",
+    borderTopLeftRadius: 25,
+    borderTopRightRadius: 25,
+    paddingHorizontal: 16,
+    backgroundColor: "#fff",
+    paddingBottom: 45,
+  },
+  photoBox: {
+    position: "absolute",
+    width: 120,
+    height: 120,
+    backgroundColor: "#F6F6F6",
+    borderRadius: 16,
+    alignSelf: "center",
+    left: "50%",
+    top: 0,
+    zIndex: 1,
+    transform: [{ translateX: -50 }, { translateY: -50 }],
+  },
+  iconImage: {
+    position: "absolute",
+    height: 25,
+    width: 25,
+    right: "-9%",
+    bottom: "9%",
+  },
+  titleText: {
+    // fontFamily: "r-bold",
+    fontSize: 30,
+    color: "#212121",
+    textAlign: "center",
+    lineHeight: 35.16,
+    letterSpacing: 1,
+    marginBottom: 32,
+    marginTop: 64,
+  },
+  input: {
+    // fontFamily: "r-regular",
+    fontSize: 16,
+    height: 50,
+    borderRadius: 8,
+    backgroundColor: "#F6F6F6",
+    borderColor: "#E8E8E8",
+    borderStyle: "solid",
+    borderWidth: 1,
+    marginBottom: 16,
+    padding: 16,
+    lineHeight: 18.75,
+    // marginHorizontal: 16,
+  },
+  inputPassword: {
+    // fontFamily: "r-regular",
+    fontSize: 16,
+    height: 50,
+    borderRadius: 8,
+    backgroundColor: "#F6F6F6",
+    borderColor: "#E8E8E8",
+    borderStyle: "solid",
+    borderWidth: 1,
+    padding: 16,
+    lineHeight: 18.75,
+  },
+  btn: {
+    height: 51,
+    backgroundColor: "#FF6C00",
+    borderRadius: 100,
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 43,
+    marginBottom: 16,
+  },
+  btnTitle: {
+    // fontFamily: "r-regular",
+    fontWeight: "400",
+    fontSize: 16,
+    color: "#ffffff",
+    lineHeight: 19,
+  },
+  loginText: {
+    // fontFamily: "r-regular",
+    fontWeight: "400",
+    fontSize: 16,
+    color: "#1B4371",
+    textAlign: "center",
+    lineHeight: 19,
+    // marginBottom: 78,
+  },
+});
