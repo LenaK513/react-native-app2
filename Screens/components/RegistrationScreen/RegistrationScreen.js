@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
-  Dimensions,
+  // Dimensions,
 } from "react-native";
 
 export default function RegistrationScreen() {
@@ -18,19 +18,6 @@ export default function RegistrationScreen() {
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
-
-  useEffect(() => {
-    const onChange = () => {
-      const width = Dimensions.get("window").width;
-
-      setdimensions(width);
-    };
-    Dimensions.addEventListener("change", onChange);
-    return () => {
-      Dimensions.removeEventListener("change", onChange);
-    };
-  }, []);
 
   const keyboardHide = () => {
     setIsShowKeyboard(false);
@@ -47,6 +34,7 @@ export default function RegistrationScreen() {
   const loginHandler = (text) => setLogin(text);
   const emailHandler = (text) => setEmail(text);
   const passwordHandler = (text) => setPassword(text);
+
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
@@ -54,13 +42,16 @@ export default function RegistrationScreen() {
           style={styles.imageBG}
           source={require("../../../assets/images/image.png")}
         >
-          <KeyboardAvoidingView behavior={Platform.OS == "ios" && "padding"}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={-100}
+          >
             <View
-              // style={{
-              //   ...styles.form,
-              //   paddingBottom: isShowKeyboard ? 45 : null,
-              // }}
-              style={{ ...styles.form, width: dimensions }}
+              style={{
+                ...styles.form,
+                // marginBottom: isShowKeyboard ? 0 : 10,
+                // width: dimensions,
+              }}
             >
               <View style={styles.photoBox}>
                 <Image
@@ -95,6 +86,7 @@ export default function RegistrationScreen() {
                 placeholderTextColor="#BDBDBD"
                 onFocus={() => setIsShowKeyboard(true)}
               />
+
               <TouchableOpacity style={styles.btn} onPress={onLogin}>
                 <Text style={styles.btnTitle}>Sign up</Text>
               </TouchableOpacity>
@@ -137,7 +129,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     left: "50%",
     top: 0,
-    zIndex: 1,
+    zIndex: 2,
     transform: [{ translateX: -50 }, { translateY: -50 }],
   },
   iconImage: {
@@ -182,7 +174,9 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     padding: 16,
     lineHeight: 18.75,
+    // marginBottom: 43,
   },
+
   btn: {
     height: 51,
     backgroundColor: "#FF6C00",
@@ -206,6 +200,6 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     textAlign: "center",
     lineHeight: 19,
-    // marginBottom: 78,
+    // marginBottom: 45,
   },
 });
