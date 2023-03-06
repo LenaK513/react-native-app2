@@ -19,17 +19,16 @@ export default function RegistrationScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focus, setFocus] = useState(false);
-  const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
+  const [dimensions, setDimensions] = useState(Dimensions.get("window").width);
 
   useEffect(() => {
     const onChange = () => {
       const width = Dimensions.get("window").width;
-
-      setdimensions(width);
+      setDimensions(width);
     };
     Dimensions.addEventListener("change", onChange);
     return () => {
-      Dimensions.remove();
+      Dimensions.remove("change", onChange);
     };
   }, []);
 
