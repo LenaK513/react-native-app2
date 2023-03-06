@@ -17,6 +17,20 @@ export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
+
+  useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get("window").width;
+      console.log(width);
+      setdimensions(width);
+    };
+    Dimensions.addEventListener("change", onChange);
+    return () => {
+      Dimensions.remove();
+    };
+  }, []);
+
   const keyboardHide = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
@@ -39,8 +53,16 @@ export default function LoginScreen() {
           style={styles.image}
           source={require("../../../assets/images/image.png")}
         >
-          <KeyboardAvoidingView behavior={Platform.OS == "ios" && "padding"}>
-            <View style={styles.form}>
+          <KeyboardAvoidingView
+            behavior={Platform.OS == "ios" ? "padding" : "height"}
+            keyboardVerticalOffset={-50}
+          >
+            <View
+              style={{
+                ...styles.form,
+                width: dimensions,
+              }}
+            >
               <Text style={styles.textTitleLogin}>Login</Text>
               <TextInput
                 style={styles.input}

@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
-  // Dimensions,
+  Dimensions,
 } from "react-native";
 
 export default function RegistrationScreen() {
@@ -18,10 +18,20 @@ export default function RegistrationScreen() {
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [hidenPassword, setHidePassword] = useState({
-    hide: true,
-    text: "Show",
-  });
+  const [focus, setFocus] = useState(false);
+  const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
+
+  useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get("window").width;
+
+      setdimensions(width);
+    };
+    Dimensions.addEventListener("change", onChange);
+    return () => {
+      Dimensions.remove();
+    };
+  }, []);
 
   const keyboardHide = () => {
     setIsShowKeyboard(false);
@@ -39,14 +49,6 @@ export default function RegistrationScreen() {
   const emailHandler = (text) => setEmail(text);
   const passwordHandler = (text) => setPassword(text);
 
-  const hidePassword = () => {
-    if (hidenPassword.hide) {
-      setHidePassword({ hide: false, text: "Hide" });
-    } else {
-      setHidePassword({ hide: true, text: "Show" });
-    }
-  };
-
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
@@ -62,7 +64,7 @@ export default function RegistrationScreen() {
               style={{
                 ...styles.form,
                 // marginBottom: isShowKeyboard ? 0 : 10,
-                // width: dimensions,
+                width: dimensions,
               }}
             >
               <View style={styles.photoBox}>
@@ -75,7 +77,7 @@ export default function RegistrationScreen() {
               <TextInput
                 value={login}
                 onChangeText={loginHandler}
-                style={styles.input}
+                style={[styles.input, focus && styles.focus]}
                 placeholder="Login"
                 placeholderTextColor="#BDBDBD"
                 onFocus={() => setIsShowKeyboard(true)}
@@ -101,10 +103,10 @@ export default function RegistrationScreen() {
                 />
                 <TouchableOpacity
                   style={styles.showPasswordButton}
-                  onPress={hidePassword}
+                  // onPress={hidePassword}
                 >
                   <Text style={styles.showPasswordButton__text}>
-                    {hidenPassword.text}
+                    {/* {hidenPassword.text} */}
                   </Text>
                 </TouchableOpacity>
               </View>
