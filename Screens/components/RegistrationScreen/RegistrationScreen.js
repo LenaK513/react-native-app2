@@ -19,18 +19,19 @@ export default function RegistrationScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focus, setFocus] = useState(false);
-  const [dimensions, setDimensions] = useState(Dimensions.get("window").width);
+  const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
 
   useEffect(() => {
     const onChange = () => {
       const width = Dimensions.get("window").width;
-      setDimensions(width);
+
+      setdimensions(width);
     };
     Dimensions.addEventListener("change", onChange);
     return () => {
-      Dimensions.remove("change", onChange);
+      Dimensions.removeEventListener("change", onChange);
     };
-  }, []);
+  });
 
   const keyboardHide = () => {
     setIsShowKeyboard(false);
@@ -52,7 +53,7 @@ export default function RegistrationScreen() {
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
         <ImageBackground
-          style={styles.imageBG}
+          style={{ ...styles.imageBG, width: dimensions }}
           source={require("../../../assets/images/image.png")}
         >
           <KeyboardAvoidingView
@@ -62,8 +63,7 @@ export default function RegistrationScreen() {
             <View
               style={{
                 ...styles.form,
-                // marginBottom: isShowKeyboard ? 0 : 10,
-                width: dimensions,
+                // width: dimensions,
               }}
             >
               <View style={styles.photoBox}>
