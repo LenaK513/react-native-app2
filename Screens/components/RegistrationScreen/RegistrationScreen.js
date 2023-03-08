@@ -19,19 +19,39 @@ export default function RegistrationScreen() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focus, setFocus] = useState(false);
-  const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
+
+  // const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
+
+  // useEffect(() => {
+  //   const onChange = () => {
+  //     const width = Dimensions.get("window").width;
+  //     setdimensions(width);
+  //   };
+  //   Dimensions.addEventListener("change", onChange);
+  //   return () => {
+  //     Dimensions.removeEventListener("change", onChange);
+  //   };
+  // }, []);
+
+  const [dimensions, setdimensions] = useState(Dimensions.get("window"));
 
   useEffect(() => {
     const onChange = () => {
       const width = Dimensions.get("window").width;
-
-      setdimensions(width);
+      const height = Dimensions.get("window").height;
+      console.log(width);
+      console.log(height);
+      if (width > height) {
+        setdimensions({ orientation: "landscape" });
+      } else {
+        setdimensions({ orientation: "portrait" });
+      }
     };
     Dimensions.addEventListener("change", onChange);
     return () => {
       Dimensions.removeEventListener("change", onChange);
     };
-  });
+  }, []);
 
   const keyboardHide = () => {
     setIsShowKeyboard(false);
@@ -53,7 +73,7 @@ export default function RegistrationScreen() {
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
         <ImageBackground
-          style={{ ...styles.imageBG, width: dimensions }}
+          style={styles.imageBG}
           source={require("../../../assets/images/image.png")}
         >
           <KeyboardAvoidingView
