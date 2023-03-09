@@ -47,10 +47,8 @@ export default function RegistrationScreen() {
         setdimensions({ orientation: "portrait" });
       }
     };
-    Dimensions.addEventListener("change", onChange);
-    return () => {
-      Dimensions.removeEventListener("change", onChange);
-    };
+    const subscription = Dimensions.addEventListener("change", onChange);
+    return () => subscription?.remove();
   }, []);
 
   const keyboardHide = () => {

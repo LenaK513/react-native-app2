@@ -25,10 +25,8 @@ export default function LoginScreen() {
       console.log(width);
       setdimensions(width);
     };
-    Dimensions.addEventListener("change", onChange);
-    return () => {
-      Dimensions.remove();
-    };
+    const subscription = Dimensions.addEventListener("change", onChange);
+    return () => subscription?.remove();
   }, []);
 
   const keyboardHide = () => {
