@@ -20,19 +20,6 @@ export default function RegistrationScreen() {
   const [password, setPassword] = useState("");
   const [focus, setFocus] = useState(false);
 
-  // const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
-
-  // useEffect(() => {
-  //   const onChange = () => {
-  //     const width = Dimensions.get("window").width;
-  //     setdimensions(width);
-  //   };
-  //   Dimensions.addEventListener("change", onChange);
-  //   return () => {
-  //     Dimensions.removeEventListener("change", onChange);
-  //   };
-  // }, []);
-
   const [dimensions, setdimensions] = useState(Dimensions.get("window"));
 
   useEffect(() => {
