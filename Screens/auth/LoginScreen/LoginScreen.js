@@ -12,7 +12,7 @@ import {
   Dimensions,
 } from "react-native";
 
-export default function LoginScreen() {
+export default function LoginScreen({ navigation }) {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -82,14 +82,13 @@ export default function LoginScreen() {
                 />
               </View>
 
-              <TouchableOpacity
-                style={styles.btn}
-                // style={{ ...styles.btn, marginTop: isShowKeyboard ? 43 : 10 }}
-                onPress={onLogin}
-              >
+              <TouchableOpacity style={styles.btn} onPress={onLogin}>
                 <Text style={styles.btnText}> log In</Text>
               </TouchableOpacity>
-              <Text style={styles.textSignup}>
+              <Text
+                style={styles.textSignup}
+                onPress={() => navigation.navigate("Register")}
+              >
                 Don't have an account?Sign Up
               </Text>
             </View>

@@ -13,7 +13,7 @@ import {
   Dimensions,
 } from "react-native";
 
-export default function RegistrationScreen() {
+export default function RegistrationScreen({ navigation }) {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
@@ -105,13 +105,8 @@ export default function RegistrationScreen() {
                   placeholderTextColor="#BDBDBD"
                   onFocus={() => setIsShowKeyboard(true)}
                 />
-                <TouchableOpacity
-                  style={styles.showPasswordButton}
-                  // onPress={hidePassword}
-                >
-                  <Text style={styles.showPasswordButton__text}>
-                    {/* {hidenPassword.text} */}
-                  </Text>
+                <TouchableOpacity style={styles.showPasswordButton}>
+                  <Text style={styles.showPasswordButton__text}></Text>
                 </TouchableOpacity>
               </View>
 
@@ -119,7 +114,10 @@ export default function RegistrationScreen() {
                 <Text style={styles.btnTitle}>Sign up</Text>
               </TouchableOpacity>
 
-              <Text style={styles.loginText}>
+              <Text
+                style={styles.loginText}
+                onPress={() => navigation.navigate("Login")}
+              >
                 {"\n"}
                 Have already had an account? Login
               </Text>
