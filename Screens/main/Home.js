@@ -13,7 +13,10 @@ const MainTab = createBottomTabNavigator();
 
 const Home = () => {
   return (
-    <MainTab.Navigator>
+    <MainTab.Navigator
+      initialRouteName="PostsScreen"
+      screenOptions={{ tabBarShowLabel: false }}
+    >
       <MainTab.Screen name="CommentsScreen" component={CommentsScreen} />
       <MainTab.Screen name="CreatePostsScreen" component={CreatePostsScreen} />
       <MainTab.Screen name="MapScreen" component={MapScreen} />
@@ -48,3 +51,4 @@ export default Home;
 // <AntDesign name="arrowleft" size={24} color="black" />
 // <AntDesign name="arrowup" size={24} color="black" />
 // <AntDesign name="like2" size={24} color="black" />
+// <AntDesign name="delete" size={24} color="black" />

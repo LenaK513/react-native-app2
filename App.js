@@ -8,7 +8,7 @@ import { StyleSheet, View } from "react-native";
 import { useRoute } from "./router";
 
 export default function App() {
-  const routing = useRoute({});
+  const routing = useRoute(null);
 
   const [fontsLoaded] = useFonts({
     "r-bold": require("./assets/fonts/Roboto-Bold.ttf"),

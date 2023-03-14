@@ -46,6 +46,7 @@ export default function RegistrationScreen({ navigation }) {
   const onLogin = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
+    navigation.navigate("Home");
     console.log("credentials", `${login}+${email}+${password}`);
     setLogin(""), setEmail(""), setPassword("");
   };
