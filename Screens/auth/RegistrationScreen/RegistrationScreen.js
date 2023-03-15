@@ -19,7 +19,6 @@ export default function RegistrationScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [focus, setFocus] = useState(false);
-
   const [dimensions, setdimensions] = useState(Dimensions.get("window"));
 
   useEffect(() => {
@@ -46,7 +45,6 @@ export default function RegistrationScreen({ navigation }) {
   const onLogin = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    navigation.navigate("Home");
     console.log("credentials", `${login}+${email}+${password}`);
     setLogin(""), setEmail(""), setPassword("");
   };

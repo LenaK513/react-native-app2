@@ -1,14 +1,19 @@
 import React from "react";
-import { Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 const PostsScreen = () => {
-  return <Text style={styles.title}>PostsScreen</Text>;
+  return <View style={styles.container}></View>;
 };
 
 const styles = StyleSheet.create({
-  title: {
-    alignItems: "center",
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#ffffff",
   },
+  // title: {
+  //   alignItems: "center",
+  // },
 });
 
 export default PostsScreen;

@@ -2,7 +2,8 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, StyleSheet } from "react-native";
-
+import { Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import CommentsScreen from "./CommentsScreen";
 import CreatePostsScreen from "./CreatePostsScreen";
 import MapScreen from "./MapScreen";
@@ -17,11 +18,60 @@ const Home = () => {
       initialRouteName="PostsScreen"
       screenOptions={{ tabBarShowLabel: false }}
     >
-      <MainTab.Screen name="CommentsScreen" component={CommentsScreen} />
-      <MainTab.Screen name="CreatePostsScreen" component={CreatePostsScreen} />
-      <MainTab.Screen name="MapScreen" component={MapScreen} />
-      <MainTab.Screen name="PostsScreen" component={PostsScreen} />
-      <MainTab.Screen name="ProfileScreen" component={ProfileScreen} />
+      <MainTab.Screen
+        name="PostsScreen"
+        component={PostsScreen}
+        options={{
+          tabBarIcon: ({ focused, size, color }) => (
+            <Ionicons name="md-grid-outline" size={24} color="grey" />
+          ),
+          title: "Publications",
+          headerTitleStyle: {
+            fontSize: 17,
+            fontWeight: "500",
+            color: "#212121",
+          },
+          headerTitleAlign: "center",
+          headerRight: () => (
+            <Ionicons name="exit-outline" size={24} color="grey" />
+          ),
+        }}
+      />
+      <MainTab.Screen
+        name="CreatePostsScreen"
+        component={CreatePostsScreen}
+        options={{
+          tabBarIcon: ({ focused, size, color }) => (
+            <Feather name="plus" size={24} color={color} />
+          ),
+        }}
+      />
+      <MainTab.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: ({ focused, size, color }) => (
+            <Feather name="user" size={24} color={color} />
+          ),
+        }}
+      />
+      <MainTab.Screen
+        name="CommentsScreen"
+        component={CommentsScreen}
+        options={{
+          tabBarButton: () => null,
+          tabBarStyle: { display: "none" },
+        }}
+      />
+
+      <MainTab.Screen
+        name="MapScreen"
+        component={MapScreen}
+        options={{
+          tabBarButton: () => null,
+          tabBarStyle: { display: "none" },
+        }}
+      />
     </MainTab.Navigator>
   );
 };
