@@ -16,15 +16,31 @@ const Home = () => {
   return (
     <MainTab.Navigator
       initialRouteName="PostsScreen"
-      screenOptions={{ tabBarShowLabel: false }}
+      screenOptions={{
+        tabBarShowLabel: false,
+        tabBarActiveBackgroundColor: "#FF6C00",
+        tabBarActiveTintColor: "white",
+        tabBarStyle: {
+          width: "auto",
+          alignItems: "center",
+        },
+
+        tabBarItemStyle: {
+          borderRadius: 20,
+          margin: 5,
+          maxWidth: 70,
+          minHeight: 40,
+        },
+      }}
     >
       <MainTab.Screen
         name="PostsScreen"
         component={PostsScreen}
         options={{
           tabBarIcon: ({ focused, size, color }) => (
-            <Ionicons name="md-grid-outline" size={24} color="grey" />
+            <Ionicons name="md-grid-outline" size={24} color={color} />
           ),
+
           title: "Publications",
           headerTitleStyle: {
             fontSize: 17,
@@ -32,6 +48,7 @@ const Home = () => {
             color: "#212121",
           },
           headerTitleAlign: "center",
+
           headerRight: () => (
             <Ionicons name="exit-outline" size={24} color="grey" />
           ),
