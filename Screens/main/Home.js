@@ -50,7 +50,12 @@ const Home = () => {
           headerTitleAlign: "center",
 
           headerRight: () => (
-            <Ionicons name="exit-outline" size={24} color="grey" />
+            <Ionicons
+              name="exit-outline"
+              size={24}
+              color="grey"
+              style={{ marginRight: 5 }}
+            />
           ),
         }}
       />

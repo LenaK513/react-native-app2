@@ -16,7 +16,6 @@ export default function LoginScreen({ navigation }) {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
 
   useEffect(() => {
