@@ -66,6 +66,13 @@ const Home = () => {
           tabBarIcon: ({ focused, size, color }) => (
             <Feather name="plus" size={24} color={color} />
           ),
+
+          headerTitleStyle: {
+            fontSize: 17,
+            fontWeight: "500",
+            color: "#212121",
+          },
+          headerTitleAlign: "center",
         }}
       />
       <MainTab.Screen
@@ -75,6 +82,12 @@ const Home = () => {
           tabBarIcon: ({ focused, size, color }) => (
             <Feather name="user" size={24} color={color} />
           ),
+          headerTitleStyle: {
+            fontSize: 17,
+            fontWeight: "500",
+            color: "#212121",
+          },
+          headerTitleAlign: "center",
         }}
       />
       <MainTab.Screen
