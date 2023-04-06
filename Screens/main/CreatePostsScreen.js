@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
+  Image,
   TextInput,
   StyleSheet,
   TouchableOpacity,
@@ -12,10 +13,20 @@ import { AntDesign } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 
 const CreatePostsScreen = () => {
+  const [camera, setCamera] = useState(null);
+  const [photo, setPhoto] = useState(null);
+  const takePicture = async () => {
+    const photo = await camera.takePictureAsync();
+    setPhoto(photo.uri);
+  };
+
   return (
     <View style={styles.container}>
-      <Camera style={styles.camera}>
-        <TouchableOpacity onPress={() => {}} style={styles.iconContainer}>
+      <View>
+        <Image source={{ uri: photo }} />
+      </View>
+      <Camera style={styles.camera} ref={setCamera}>
+        <TouchableOpacity onPress={takePicture} style={styles.iconContainer}>
           <AntDesign
             name="camerao"
             size={30}
@@ -26,15 +37,9 @@ const CreatePostsScreen = () => {
       </Camera>
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={-18}
+        // keyboardVerticalOffset={1}
       >
-        <View
-          style={styles.form}
-          // style={{
-          //   ...styles.form,
-          //   width: dimensions,
-          // }}
-        >
+        <View style={styles.form}>
           <TextInput
             style={styles.input}
             placeholder="Title"
@@ -81,13 +86,14 @@ const styles = StyleSheet.create({
     marginTop: 32,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#E8E8E8",
   },
   iconContainer: {
     color: "#E8E8E8",
-    borderColor: "#000",
-    borderRadius: 8,
-    borderStyle: "solid",
-    borderWidth: 9,
+    borderColor: "#fff",
+    // borderRadius: 8,
+    // borderStyle: "solid",
+    // borderWidth: 9,
   },
   form: {
     marginHorizontal: 16,
