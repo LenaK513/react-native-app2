@@ -12,7 +12,7 @@ import { Camera } from "expo-camera";
 import { AntDesign } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 
-const CreatePostsScreen = () => {
+const CreatePostsScreen = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
   const takePicture = async () => {
@@ -20,21 +20,29 @@ const CreatePostsScreen = () => {
     setPhoto(photo.uri);
   };
 
+  const sendPicture = () => {
+    console.log("navigation", navigation);
+    navigation.navigate("PostsScreen", { photo });
+  };
+
   return (
     <View style={styles.container}>
       <View>
         <Image source={{ uri: photo }} />
       </View>
-      <Camera style={styles.camera} ref={setCamera}>
-        <TouchableOpacity onPress={takePicture} style={styles.iconContainer}>
-          <AntDesign
-            name="camerao"
-            size={30}
-            color="#E8E8E8"
-            style={styles.icon}
-          />
-        </TouchableOpacity>
-      </Camera>
+      <View style={styles.cameraContainer}>
+        <Camera style={styles.camera} ref={setCamera}>
+          <TouchableOpacity onPress={takePicture} style={styles.iconContainer}>
+            <AntDesign
+              name="camerao"
+              size={30}
+              color="#E8E8E8"
+              style={styles.icon}
+            />
+          </TouchableOpacity>
+        </Camera>
+      </View>
+
       <KeyboardAvoidingView
         behavior={Platform.OS == "ios" ? "padding" : "height"}
         // keyboardVerticalOffset={1}
@@ -59,7 +67,7 @@ const CreatePostsScreen = () => {
             />
           </View>
 
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity style={styles.btn} onPress={sendPicture}>
             <Text style={styles.btnText}> Post</Text>
           </TouchableOpacity>
           {/* <Text
@@ -79,7 +87,15 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#ffffff",
   },
-
+  cameraContainer: {
+    // height: 267,
+    // marginHorizontal: 16,
+    // marginTop: 32,
+    // // justifyContent: "center",
+    // // alignItems: "center",
+    // backgroundColor: "#E8E8E8",
+    // borderRadius: 10,
+  },
   camera: {
     height: 267,
     marginHorizontal: 16,
