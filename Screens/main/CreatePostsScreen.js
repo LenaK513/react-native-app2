@@ -21,22 +21,6 @@ const CreatePostsScreen = ({ navigation }) => {
 
   const [location, setLocation] = useState(null);
 
-  useEffect(() => {
-    (async () => {
-      let { status } = await Location.getBackgroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission to access location was denied");
-      }
-
-      let location = await Location.getCurrentPositionAsync({});
-      const coords = {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      };
-      console.log(location);
-    })();
-  }, []);
-
   const takePicture = async () => {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
