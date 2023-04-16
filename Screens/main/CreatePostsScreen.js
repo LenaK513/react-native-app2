@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -7,20 +7,42 @@ import {
   StyleSheet,
   TouchableOpacity,
   KeyboardAvoidingView,
+  Dimensions,
 } from "react-native";
 import { Camera } from "expo-camera";
 import { AntDesign } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import * as Location from "expo-location";
+import MapView, { Marker } from "react-native-maps";
 
 const CreatePostsScreen = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
+
+  const [location, setLocation] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      let { status } = await Location.getBackgroundPermissionsAsync();
+      if (status !== "granted") {
+        console.log("Permission to access location was denied");
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      const coords = {
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      };
+      console.log(coords);
+    })();
+  }, []);
+
   const takePicture = async () => {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
   };
 
-  const sendPicture = () => {
+  const sendPicture = async () => {
     console.log("navigation", navigation);
     navigation.navigate("PostsScreen", { photo });
   };
@@ -107,9 +129,6 @@ const styles = StyleSheet.create({
   iconContainer: {
     color: "#E8E8E8",
     borderColor: "#fff",
-    // borderRadius: 8,
-    // borderStyle: "solid",
-    // borderWidth: 9,
   },
   form: {
     marginHorizontal: 16,
@@ -161,6 +180,10 @@ const styles = StyleSheet.create({
     lineHeight: 18.75,
     color: "#ffffff",
   },
+  // mapStyle: {
+  //   width: Dimensions.get("window").width,
+  //   height: Dimensions.get("window").height,
+  // },
 });
 
 export default CreatePostsScreen;

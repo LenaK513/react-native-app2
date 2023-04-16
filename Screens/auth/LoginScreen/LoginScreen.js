@@ -10,6 +10,7 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Dimensions,
+  Image,
 } from "react-native";
 
 export default function LoginScreen({ navigation }) {
@@ -46,53 +47,52 @@ export default function LoginScreen({ navigation }) {
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container}>
-        <ImageBackground
+        <Image
           style={styles.image}
           source={require("../../../assets/images/image.png")}
+        ></Image>
+        <KeyboardAvoidingView
+          behavior={Platform.OS == "ios" ? "padding" : "height"}
+          keyboardVerticalOffset={10}
         >
-          <KeyboardAvoidingView
-            behavior={Platform.OS == "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={-18}
+          <View
+            style={{
+              ...styles.form,
+              width: dimensions,
+            }}
           >
-            <View
-              style={{
-                ...styles.form,
-                width: dimensions,
-              }}
-            >
-              <Text style={styles.textTitleLogin}>Login</Text>
+            <Text style={styles.textTitleLogin}>Login</Text>
+            <TextInput
+              style={styles.input}
+              placeholder="Email address"
+              placeholderTextColor="#BDBDBD"
+              onFocus={() => setIsShowKeyboard(true)}
+              value={email}
+              onChangeText={emailHandler}
+            />
+            <View style={{ marginTop: 16 }}>
               <TextInput
                 style={styles.input}
-                placeholder="Email address"
+                secureTextEntry={true}
+                placeholder="Enter password"
                 placeholderTextColor="#BDBDBD"
                 onFocus={() => setIsShowKeyboard(true)}
-                value={email}
-                onChangeText={emailHandler}
+                value={password}
+                onChangeText={passwordHandler}
               />
-              <View style={{ marginTop: 16 }}>
-                <TextInput
-                  style={styles.input}
-                  secureTextEntry={true}
-                  placeholder="Enter password"
-                  placeholderTextColor="#BDBDBD"
-                  onFocus={() => setIsShowKeyboard(true)}
-                  value={password}
-                  onChangeText={passwordHandler}
-                />
-              </View>
-
-              <TouchableOpacity style={styles.btn} onPress={onLogin}>
-                <Text style={styles.btnText}> log In</Text>
-              </TouchableOpacity>
-              <Text
-                style={styles.textSignup}
-                onPress={() => navigation.navigate("Register")}
-              >
-                Don't have an account?Sign Up
-              </Text>
             </View>
-          </KeyboardAvoidingView>
-        </ImageBackground>
+
+            <TouchableOpacity style={styles.btn} onPress={onLogin}>
+              <Text style={styles.btnText}> log In</Text>
+            </TouchableOpacity>
+            <Text
+              style={styles.textSignup}
+              onPress={() => navigation.navigate("Register")}
+            >
+              Don't have an account?Sign Up
+            </Text>
+          </View>
+        </KeyboardAvoidingView>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -100,19 +100,27 @@ export default function LoginScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+
     backgroundColor: "#ffffff",
   },
   image: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "flex-end",
+    width: "100%",
+    height: "100%",
+    position: "absolute",
   },
   form: {
+    // position: "relative",
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
     backgroundColor: "#ffffff",
     paddingHorizontal: 16,
+    top: 360,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: 1,
   },
   textTitleLogin: {
     fontFamily: "r-bold",
@@ -158,6 +166,6 @@ const styles = StyleSheet.create({
     lineHeight: 18.75,
     color: "#1B4371",
     alignSelf: "center",
-    marginBottom: 144,
+    marginBottom: 159,
   },
 });
