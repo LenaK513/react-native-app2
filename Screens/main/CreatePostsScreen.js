@@ -13,7 +13,6 @@ import { Camera } from "expo-camera";
 import { AntDesign } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import * as Location from "expo-location";
-import MapView, { Marker } from "react-native-maps";
 
 const CreatePostsScreen = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
