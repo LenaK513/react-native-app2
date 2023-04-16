@@ -23,7 +23,7 @@ const CreatePostsScreen = ({ navigation }) => {
 
   useEffect(() => {
     (async () => {
-      let { status } = await Location.getBackgroundPermissionsAsync();
+      let { status } = await Location.getForegroundPermissionsAsync();
       if (status !== "granted") {
         console.log("Permission to access location was denied");
       }
@@ -33,7 +33,7 @@ const CreatePostsScreen = ({ navigation }) => {
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       };
-      console.log(coords);
+      console.log(location);
     })();
   }, []);
 
