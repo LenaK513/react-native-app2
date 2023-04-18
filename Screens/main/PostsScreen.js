@@ -35,15 +35,6 @@ const PostsScreen = ({ route, navigation }) => {
           </View>
         )}
       />
-      <Text title="go to map" onPress={() => navigation.navigate("MapScreen")}>
-        Map
-      </Text>
-      <Text
-        title="go to Comments"
-        onPress={() => navigation.navigate("CommentsScreen")}
-      >
-        Comments
-      </Text>
     </View>
   );
 };
