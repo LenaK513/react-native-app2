@@ -112,12 +112,6 @@ const Home = () => {
   );
 };
 
-// const styles = StyleSheet.create({
-//   title: {
-//     alignItems: "center",
-//   },
-// });
-
 export default Home;
 
 // import { Feather } from "@expo/vector-icons";
