@@ -23,23 +23,23 @@ const CreatePostsScreen = ({ navigation }) => {
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
+      console.log(status);
       if (status !== "granted") {
         console.log("Permission to access location was denied");
       }
-
-      let location = await Location.getCurrentPositionAsync({});
-      // const coords = {
-      //   latitude: location.coords.latitude,
-      //   longitude: location.coords.longitude,
-      // };
-      console.log("latitude", location.coords.latitude);
-      console.log("longitude", location.coords.longitude);
     })();
   }, []);
 
   const takePicture = async () => {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
+    let location = await Location.getCurrentPositionAsync({});
+    console.log(location);
+    const coords = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
+    setLocation(coords);
   };
 
   const sendPicture = async () => {

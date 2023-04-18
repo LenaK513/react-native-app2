@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import { View, Text, StyleSheet, FlatList, Image, Button } from "react-native";
 
-const PostsScreen = ({ route }) => {
+const PostsScreen = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
   useEffect(() => {
     if (route.params) {
@@ -20,9 +20,30 @@ const PostsScreen = ({ route }) => {
               source={{ uri: item.photo }}
               style={{ width: 350, height: 200 }}
             />
+            <Text
+              title="go to map"
+              onPress={() => navigation.navigate("MapScreen")}
+            >
+              Map
+            </Text>
+            <Text
+              title="go to Comments"
+              onPress={() => navigation.navigate("CommentsScreen")}
+            >
+              Comments
+            </Text>
           </View>
         )}
       />
+      <Text title="go to map" onPress={() => navigation.navigate("MapScreen")}>
+        Map
+      </Text>
+      <Text
+        title="go to Comments"
+        onPress={() => navigation.navigate("CommentsScreen")}
+      >
+        Comments
+      </Text>
     </View>
   );
 };
@@ -33,9 +54,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#ffffff",
   },
-  // title: {
-  //   alignItems: "center",
-  // },
 
   imagesContainer: {
     justifyContent: "center",
