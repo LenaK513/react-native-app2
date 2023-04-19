@@ -9,7 +9,7 @@ import Home from "./Screens/main/Home";
 const AuthStack = createStackNavigator();
 
 export const useRoute = (isAuth) => {
-  if (isAuth) {
+  if (!isAuth) {
     return (
       <AuthStack.Navigator>
         <AuthStack.Screen
