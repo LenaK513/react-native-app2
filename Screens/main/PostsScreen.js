@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, Image, Button } from "react-native";
+import { Feather } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const PostsScreen = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
@@ -21,16 +23,16 @@ const PostsScreen = ({ route, navigation }) => {
               style={{ width: 350, height: 200 }}
             />
             <Text
-              title="go to map"
-              onPress={() => navigation.navigate("MapScreen")}
-            >
-              Map
-            </Text>
-            <Text
               title="go to Comments"
               onPress={() => navigation.navigate("CommentsScreen")}
             >
-              Comments
+              <Feather name="message-circle" size={24} color="black" />
+            </Text>
+            <Text
+              title="go to map"
+              onPress={() => navigation.navigate("MapScreen")}
+            >
+              <AntDesign name="enviromento" size={24} color="black" />
             </Text>
           </View>
         )}
