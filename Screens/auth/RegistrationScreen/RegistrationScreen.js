@@ -18,8 +18,10 @@ export default function RegistrationScreen({ navigation }) {
   const [login, setLogin] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [focus, setFocus] = useState(false);
   const [dimensions, setdimensions] = useState(Dimensions.get("window"));
+  const [isInputFocusedLogin, setIsInputFocusedLogin] = useState(false);
+  const [isInputFocusedEmail, setIsInputFocusedEmail] = useState(false);
+  const [isInputFocusedPassword, setIsInputFocusedPassword] = useState(false);
 
   useEffect(() => {
     const onChange = () => {
@@ -80,29 +82,52 @@ export default function RegistrationScreen({ navigation }) {
               <TextInput
                 value={login}
                 onChangeText={loginHandler}
-                style={[styles.input, focus && styles.focus]}
+                style={{
+                  ...styles.input,
+                  backgroundColor: isInputFocusedLogin ? "#ffffff" : "#F6F6F6",
+                  borderColor: isInputFocusedLogin ? "#FF6C00" : "#E8E8E8",
+                }}
                 placeholder="Login"
                 placeholderTextColor="#BDBDBD"
-                onFocus={() => setIsShowKeyboard(true)}
+                onFocus={() => {
+                  setIsShowKeyboard(true), setIsInputFocusedLogin(true);
+                }}
+                onBlur={() => setIsInputFocusedLogin(false)}
               />
               <TextInput
                 value={email}
                 onChangeText={emailHandler}
-                style={styles.input}
+                style={{
+                  ...styles.input,
+                  backgroundColor: isInputFocusedEmail ? "#ffffff" : "#F6F6F6",
+                  borderColor: isInputFocusedEmail ? "#FF6C00" : "#E8E8E8",
+                }}
                 placeholder="Email address"
                 placeholderTextColor="#BDBDBD"
                 keyboardType="email-address"
-                onFocus={() => setIsShowKeyboard(true)}
+                onFocus={() => {
+                  setIsShowKeyboard(true), setIsInputFocusedEmail(true);
+                }}
+                onBlur={() => setIsInputFocusedEmail(false)}
               />
               <View>
                 <TextInput
                   value={password}
                   onChangeText={passwordHandler}
-                  style={styles.inputPassword}
+                  style={{
+                    ...styles.inputPassword,
+                    backgroundColor: isInputFocusedPassword
+                      ? "#ffffff"
+                      : "#F6F6F6",
+                    borderColor: isInputFocusedPassword ? "#FF6C00" : "#E8E8E8",
+                  }}
                   secureTextEntry={true}
                   placeholder="Enter password"
                   placeholderTextColor="#BDBDBD"
-                  onFocus={() => setIsShowKeyboard(true)}
+                  onFocus={() => {
+                    setIsShowKeyboard(true), setIsInputFocusedPassword(true);
+                  }}
+                  onBlur={() => setIsInputFocusedPassword(false)}
                 />
                 <TouchableOpacity style={styles.showPasswordButton}>
                   <Text style={styles.showPasswordButton__text}></Text>
@@ -179,9 +204,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     height: 50,
     borderRadius: 8,
-    backgroundColor: "#F6F6F6",
-    borderColor: "#E8E8E8",
-    borderStyle: "solid",
+    // backgroundColor: "#F6F6F6",
+    // borderColor: "#E8E8E8",
+    // borderStyle: "solid",
     borderWidth: 1,
     marginBottom: 16,
     padding: 16,
@@ -192,9 +217,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     height: 50,
     borderRadius: 8,
-    backgroundColor: "#F6F6F6",
-    borderColor: "#E8E8E8",
-    borderStyle: "solid",
+    // backgroundColor: "#F6F6F6",
+    // borderColor: "#E8E8E8",
+    // borderStyle: "solid",
     borderWidth: 1,
     padding: 16,
     lineHeight: 18.75,

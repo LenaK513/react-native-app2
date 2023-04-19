@@ -119,7 +119,6 @@ const styles = StyleSheet.create({
   container: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
-
     backgroundColor: "#ffffff",
   },
   image: {
@@ -152,12 +151,11 @@ const styles = StyleSheet.create({
     fontFamily: "r-regular",
     fontSize: 16,
     height: 50,
-    // backgroundColor: "#F6F6F6",
-    // borderColor: "#E8E8E8",
+    backgroundColor: "#F6F6F6",
+    borderColor: "transparent",
     borderRadius: 8,
     borderStyle: "solid",
     borderWidth: 1,
-    // marginHorizontal: 16,
     lineHeight: 18.75,
     padding: 16,
   },
@@ -167,7 +165,6 @@ const styles = StyleSheet.create({
     borderRadius: 100,
     justifyContent: "center",
     alignItems: "center",
-    // marginHorizontal: 16,
     marginTop: 43,
     marginBottom: 16,
   },
