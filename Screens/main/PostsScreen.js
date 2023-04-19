@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, Image, Button } from "react-native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-// import CommentsScreen from "./CommentsScreen";
-// import CreatePostsScreen from "./CreatePostsScreen";
-// import MapScreen from "./MapScreen";
-
-// import ProfileScreen from "./ProfileScreen";
-
-// const MainTab = createBottomTabNavigator();
 
 const PostsScreen = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
@@ -15,9 +7,8 @@ const PostsScreen = ({ route, navigation }) => {
     if (route.params) {
       setPosts((prevState) => [...prevState, route.params]);
     }
-    console.log("posts", posts);
   }, [route.params]);
-
+  console.log("posts", posts);
   return (
     <View style={styles.container}>
       <FlatList
