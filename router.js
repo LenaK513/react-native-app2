@@ -25,5 +25,6 @@ export const useRoute = (isAuth) => {
       </AuthStack.Navigator>
     );
   }
+
   return <Home />;
 };
