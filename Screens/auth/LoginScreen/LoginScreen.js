@@ -18,7 +18,8 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
-
+  const [isInputFocusedEmail, setIsInputFocusedEmail] = useState(false);
+  const [isInputFocusedPassword, setIsInputFocusedPassword] = useState(false);
   useEffect(() => {
     const onChange = () => {
       const width = Dimensions.get("window").width;
@@ -63,20 +64,36 @@ export default function LoginScreen({ navigation }) {
           >
             <Text style={styles.textTitleLogin}>Login</Text>
             <TextInput
-              style={styles.input}
+              style={{
+                ...styles.input,
+                backgroundColor: isInputFocusedEmail ? "#ffffff" : "#F6F6F6",
+                borderColor: isInputFocusedEmail ? "#FF6C00" : "#E8E8E8",
+              }}
               placeholder="Email address"
               placeholderTextColor="#BDBDBD"
-              onFocus={() => setIsShowKeyboard(true)}
+              onFocus={() => {
+                setIsShowKeyboard(true), setIsInputFocusedEmail(true);
+              }}
+              onBlur={() => setIsInputFocusedEmail(false)}
               value={email}
               onChangeText={emailHandler}
             />
             <View style={{ marginTop: 16 }}>
               <TextInput
-                style={styles.input}
+                style={{
+                  ...styles.input,
+                  backgroundColor: isInputFocusedPassword
+                    ? "#ffffff"
+                    : "#F6F6F6",
+                  borderColor: isInputFocusedPassword ? "#FF6C00" : "#E8E8E8",
+                }}
                 secureTextEntry={true}
                 placeholder="Enter password"
                 placeholderTextColor="#BDBDBD"
-                onFocus={() => setIsShowKeyboard(true)}
+                onFocus={() => {
+                  setIsShowKeyboard(true), setIsInputFocusedPassword(true);
+                }}
+                onBlur={() => setIsInputFocusedPassword(false)}
                 value={password}
                 onChangeText={passwordHandler}
               />
@@ -135,8 +152,8 @@ const styles = StyleSheet.create({
     fontFamily: "r-regular",
     fontSize: 16,
     height: 50,
-    backgroundColor: "#F6F6F6",
-    borderColor: "#E8E8E8",
+    // backgroundColor: "#F6F6F6",
+    // borderColor: "#E8E8E8",
     borderRadius: 8,
     borderStyle: "solid",
     borderWidth: 1,
