@@ -3,12 +3,12 @@ import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
 import { Provider } from "react-redux";
 import { useFonts } from "expo-font";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet } from "react-native";
 import { store } from "./redux/store";
 import { useRoute } from "./router";
 
 export default function App() {
-  const routing = useRoute({});
+  const routing = useRoute(true);
 
   const [fontsLoaded] = useFonts({
     "r-bold": require("./assets/fonts/Roboto-Bold.ttf"),
