@@ -1,10 +1,10 @@
 import React from "react";
 import "react-native-gesture-handler";
 import { NavigationContainer } from "@react-navigation/native";
-
+import { Provider } from "react-redux";
 import { useFonts } from "expo-font";
 import { StyleSheet, View } from "react-native";
-
+import { store } from "./redux/store";
 import { useRoute } from "./router";
 
 export default function App() {
@@ -19,7 +19,12 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  return <NavigationContainer>{routing}</NavigationContainer>;
+
+  return (
+    <Provider store={store}>
+      <NavigationContainer>{routing}</NavigationContainer>
+    </Provider>
+  );
 }
 
 const styles = StyleSheet.create({
