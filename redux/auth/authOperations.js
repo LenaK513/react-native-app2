@@ -4,11 +4,18 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 
+import { authSlice } from "./authReducer";
+
 export const registerDB =
   ({ login, email, password }) =>
   async (dispatch, getState) => {
     try {
-      const user = await createUserWithEmailAndPassword(auth, email, password);
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      dispatch(authSlice.actions.updateUserProfile({ userId: user.uid }));
       console.log("user", user);
     } catch (error) {
       console.log("error", error);
