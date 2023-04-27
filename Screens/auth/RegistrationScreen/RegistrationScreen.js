@@ -13,15 +13,28 @@ import {
   Dimensions,
 } from "react-native";
 
+import { useDispatch } from "react-redux";
+
+import { registerDB } from "../../../redux/auth/authOperations";
+
+const initialState = {
+  login: "",
+  email: "",
+  password: "",
+};
+
 export default function RegistrationScreen({ navigation }) {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const [login, setLogin] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [state, setState] = useState(initialState);
+  // const [login, setLogin] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const [dimensions, setdimensions] = useState(Dimensions.get("window"));
   const [isInputFocusedLogin, setIsInputFocusedLogin] = useState(false);
   const [isInputFocusedEmail, setIsInputFocusedEmail] = useState(false);
   const [isInputFocusedPassword, setIsInputFocusedPassword] = useState(false);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const onChange = () => {
@@ -42,18 +55,22 @@ export default function RegistrationScreen({ navigation }) {
   const keyboardHide = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
+
+    dispatch(registerDB(state));
+    setState(initialState);
   };
 
-  const onLogin = () => {
-    setIsShowKeyboard(false);
-    Keyboard.dismiss();
-    console.log("credentials", `${login}+${email}+${password}`);
-    setLogin(""), setEmail(""), setPassword("");
-  };
+  // const onLogin = () => {
+  //   setIsShowKeyboard(false);
+  //   Keyboard.dismiss();
 
-  const loginHandler = (text) => setLogin(text);
-  const emailHandler = (text) => setEmail(text);
-  const passwordHandler = (text) => setPassword(text);
+  //   // console.log("credentials", `${login}+${email}+${password}`);
+  //   setLogin(""), setEmail(""), setPassword("");
+  // };
+
+  // const loginHandler = (text) => setLogin(text);
+  // const emailHandler = (text) => setEmail(text);
+  // const passwordHandler = (text) => setPassword(text);
 
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
@@ -80,8 +97,11 @@ export default function RegistrationScreen({ navigation }) {
               </View>
               <Text style={styles.titleText}>{"\n"}Registration</Text>
               <TextInput
-                value={login}
-                onChangeText={loginHandler}
+                value={state.login}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, login: value }))
+                }
+                // onChangeText={loginHandler}
                 style={{
                   ...styles.input,
                   backgroundColor: isInputFocusedLogin ? "#ffffff" : "#F6F6F6",
@@ -95,8 +115,11 @@ export default function RegistrationScreen({ navigation }) {
                 onBlur={() => setIsInputFocusedLogin(false)}
               />
               <TextInput
-                value={email}
-                onChangeText={emailHandler}
+                value={state.email}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, email: value }))
+                }
+                // onChangeText={emailHandler}
                 style={{
                   ...styles.input,
                   backgroundColor: isInputFocusedEmail ? "#ffffff" : "#F6F6F6",
@@ -112,8 +135,11 @@ export default function RegistrationScreen({ navigation }) {
               />
               <View>
                 <TextInput
-                  value={password}
-                  onChangeText={passwordHandler}
+                  value={state.password}
+                  onChangeText={(value) =>
+                    setState((prevState) => ({ ...prevState, password: value }))
+                  }
+                  // onChangeText={passwordHandler}
                   style={{
                     ...styles.inputPassword,
                     backgroundColor: isInputFocusedPassword
@@ -134,7 +160,7 @@ export default function RegistrationScreen({ navigation }) {
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity style={styles.btn} onPress={onLogin}>
+              <TouchableOpacity style={styles.btn} onPress={keyboardHide}>
                 <Text style={styles.btnTitle}>Sign up</Text>
               </TouchableOpacity>
 
@@ -204,9 +230,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     height: 50,
     borderRadius: 8,
-    // backgroundColor: "#F6F6F6",
-    // borderColor: "#E8E8E8",
-    // borderStyle: "solid",
     borderWidth: 1,
     marginBottom: 16,
     padding: 16,
@@ -217,9 +240,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     height: 50,
     borderRadius: 8,
-    // backgroundColor: "#F6F6F6",
-    // borderColor: "#E8E8E8",
-    // borderStyle: "solid",
     borderWidth: 1,
     padding: 16,
     lineHeight: 18.75,
