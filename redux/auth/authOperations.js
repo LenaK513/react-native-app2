@@ -4,7 +4,7 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 export const registerDB =
   ({ login, email, password }) =>
   async (dispatch, getSatte) => {
-    console.log("login, email, password", login, email, password);
+    console.log("login, email, password", login, email, password, auth);
     try {
       const user = await createUserWithEmailAndPassword(
         auth,
