@@ -55,18 +55,17 @@ export default function RegistrationScreen({ navigation }) {
   const keyboardHide = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-
-    dispatch(registerDB(state));
-    setState(initialState);
   };
 
-  // const onLogin = () => {
-  //   setIsShowKeyboard(false);
-  //   Keyboard.dismiss();
+  const onLogin = () => {
+    dispatch(registerDB(state));
+    setState(initialState);
+    setIsShowKeyboard(false);
+    Keyboard.dismiss();
 
-  //   // console.log("credentials", `${login}+${email}+${password}`);
-  //   setLogin(""), setEmail(""), setPassword("");
-  // };
+    // // console.log("credentials", `${login}+${email}+${password}`);
+    // setLogin(""), setEmail(""), setPassword("");
+  };
 
   // const loginHandler = (text) => setLogin(text);
   // const emailHandler = (text) => setEmail(text);
@@ -160,7 +159,7 @@ export default function RegistrationScreen({ navigation }) {
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity style={styles.btn} onPress={keyboardHide}>
+              <TouchableOpacity style={styles.btn} onPress={onLogin}>
                 <Text style={styles.btnTitle}>Sign up</Text>
               </TouchableOpacity>
 

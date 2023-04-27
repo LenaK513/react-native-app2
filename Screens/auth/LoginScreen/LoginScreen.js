@@ -13,13 +13,26 @@ import {
   Image,
 } from "react-native";
 
+import { useDispatch } from "react-redux";
+
+import { authStateChanged } from "../../../redux/auth/authOperations";
+
+const initialState = {
+  email: "",
+  password: "",
+};
+
 export default function LoginScreen({ navigation }) {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [state, setState] = useState(initialState);
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
   const [isInputFocusedEmail, setIsInputFocusedEmail] = useState(false);
   const [isInputFocusedPassword, setIsInputFocusedPassword] = useState(false);
+
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const onChange = () => {
       const width = Dimensions.get("window").width;
@@ -38,8 +51,10 @@ export default function LoginScreen({ navigation }) {
   const onLogin = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log("credentials", `+${email}+${password}`);
-    setEmail(""), setPassword("");
+    dispatch(authStateChanged(state));
+    // console.log("credentials", `+${email}+${password}`);
+    // setEmail(""), setPassword("");
+    setState(initialState);
   };
 
   const emailHandler = (text) => setEmail(text);
@@ -75,8 +90,10 @@ export default function LoginScreen({ navigation }) {
                 setIsShowKeyboard(true), setIsInputFocusedEmail(true);
               }}
               onBlur={() => setIsInputFocusedEmail(false)}
-              value={email}
-              onChangeText={emailHandler}
+              value={state.email}
+              onChangeText={(value) =>
+                setState((prevState) => ({ ...prevState, email: value }))
+              }
             />
             <View style={{ marginTop: 16 }}>
               <TextInput
@@ -94,8 +111,10 @@ export default function LoginScreen({ navigation }) {
                   setIsShowKeyboard(true), setIsInputFocusedPassword(true);
                 }}
                 onBlur={() => setIsInputFocusedPassword(false)}
-                value={password}
-                onChangeText={passwordHandler}
+                value={state.password}
+                onChangeText={(value) =>
+                  setState((prevState) => ({ ...prevState, password: value }))
+                }
               />
             </View>
 
