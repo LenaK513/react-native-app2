@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Dimensions,
+  Button,
 } from "react-native";
 import { Camera } from "expo-camera";
 import { AntDesign } from "@expo/vector-icons";
