@@ -15,7 +15,7 @@ import {
 
 import { useDispatch } from "react-redux";
 
-import { authStateChanged } from "../../../redux/auth/authOperations";
+import { authSignInUser } from "../../../redux/auth/authOperations";
 
 const initialState = {
   email: "",
@@ -51,7 +51,7 @@ export default function LoginScreen({ navigation }) {
   const onLogin = () => {
     setIsShowKeyboard(false);
     Keyboard.dismiss();
-    dispatch(authStateChanged(state));
+    dispatch(authSignInUser(state));
     // console.log("credentials", `+${email}+${password}`);
     // setEmail(""), setPassword("");
     setState(initialState);

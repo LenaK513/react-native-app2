@@ -5,16 +5,10 @@ import { Provider } from "react-redux";
 import { useFonts } from "expo-font";
 import { StyleSheet } from "react-native";
 import { store } from "./redux/store";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase/config";
-import { useRoute } from "./router";
+
+import Main from "./components/Main";
 
 export default function App() {
-  const [user, setUser] = useState(null);
-
-  onAuthStateChanged(auth, (user) => setUser(user));
-  const routing = useRoute(user);
-
   const [fontsLoaded] = useFonts({
     "r-bold": require("./assets/fonts/Roboto-Bold.ttf"),
     "r-light": require("./assets/fonts/Roboto-Light.ttf"),
@@ -27,7 +21,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <NavigationContainer>{routing}</NavigationContainer>
+      <Main />
     </Provider>
   );
 }
