@@ -8,12 +8,14 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Dimensions,
-  Button,
 } from "react-native";
+
+import { storage } from "../../firebase/config";
 import { Camera } from "expo-camera";
+import * as Location from "expo-location";
+import { getStorage, ref, uploadBytes } from "firebase/storage";
 import { AntDesign } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
-import * as Location from "expo-location";
 
 const CreatePostsScreen = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
@@ -44,8 +46,17 @@ const CreatePostsScreen = ({ navigation }) => {
   };
 
   const sendPicture = async () => {
-    console.log("navigation", navigation);
+    uploadPhotoToServer();
     navigation.navigate("PostsScreen", { photo });
+  };
+
+  const uploadPhotoToServer = async () => {
+    const response = await fetch(photo);
+    const file = await response.blob();
+    const uniquePostId = Date.now().toString();
+
+    const storageRef = ref(storage, `imagesOnServer/${uniquePostId}`);
+    uploadBytes(storageRef, file);
   };
 
   return (
