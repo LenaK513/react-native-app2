@@ -13,7 +13,7 @@ import {
 import { storage } from "../../firebase/config";
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
-import { getStorage, ref, uploadBytes } from "firebase/storage";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { AntDesign } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 
@@ -56,7 +56,9 @@ const CreatePostsScreen = ({ navigation }) => {
     const uniquePostId = Date.now().toString();
 
     const storageRef = ref(storage, `imagesOnServer/${uniquePostId}`);
-    uploadBytes(storageRef, file);
+    await uploadBytes(storageRef, file);
+    const uploadedPhoto = await getDownloadURL(storageRef);
+    console.log(uploadedPhoto);
   };
 
   return (
