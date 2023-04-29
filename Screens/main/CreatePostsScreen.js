@@ -9,8 +9,9 @@ import {
   KeyboardAvoidingView,
   Dimensions,
 } from "react-native";
-
-import { storage } from "../../firebase/config";
+import { useSelector } from "react-redux";
+import { collection, addDoc } from "firebase/firestore";
+import { storage, app } from "../../firebase/config";
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -20,8 +21,10 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 const CreatePostsScreen = ({ navigation }) => {
   const [camera, setCamera] = useState(null);
   const [photo, setPhoto] = useState(null);
-
   const [location, setLocation] = useState(null);
+  const [comment, setComment] = useState("");
+
+  const { userId, login } = useSelector((state) => state.auth);
 
   useEffect(() => {
     (async () => {
@@ -34,20 +37,42 @@ const CreatePostsScreen = ({ navigation }) => {
   }, []);
 
   const takePicture = async () => {
+    console.log("comment", comment);
+    console.log("location", location);
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
-    let location = await Location.getCurrentPositionAsync({});
-    console.log(location);
-    const coords = {
-      latitude: location.coords.latitude,
-      longitude: location.coords.longitude,
-    };
-    setLocation(coords);
+    // let location = await Location.getCurrentPositionAsync({});
+    // const { latitude, longitude } = location.coords;
+    //  const coords = {
+    //    latitude: location.coords.latitude,
+    //   longitude: location.coords.longitude,
+    //  };
+    // setLocation(location.coords);
   };
 
   const sendPicture = async () => {
-    uploadPhotoToServer();
+    uploadPostToServer();
     navigation.navigate("PostsScreen", { photo });
+  };
+
+  const uploadPostToServer = async () => {
+    try {
+      const location = await Location.getCurrentPositionAsync({});
+      const { latitude, longitude } = location.coords;
+
+      setLocation(location.coords);
+      const photo = await uploadPhotoToServer();
+      const docRef = await addDoc(collection(app, "posts"), {
+        image: photo,
+        // location: { latitude, longitude },
+        login,
+        userId,
+        comment,
+      });
+      console.log("docRef", docRef);
+    } catch (error) {
+      console.error("Error adding document: ", error.message);
+    }
   };
 
   const uploadPhotoToServer = async () => {
@@ -58,7 +83,7 @@ const CreatePostsScreen = ({ navigation }) => {
     const storageRef = ref(storage, `imagesOnServer/${uniquePostId}`);
     await uploadBytes(storageRef, file);
     const uploadedPhoto = await getDownloadURL(storageRef);
-    console.log(uploadedPhoto);
+    return uploadedPhoto;
   };
 
   return (
@@ -88,6 +113,7 @@ const CreatePostsScreen = ({ navigation }) => {
             style={styles.input}
             placeholder="Title"
             placeholderTextColor="#BDBDBD"
+            onChangeText={setComment}
           />
           <View style={styles.areaContainer}>
             <SimpleLineIcons
@@ -100,6 +126,7 @@ const CreatePostsScreen = ({ navigation }) => {
               style={styles.inputArea}
               placeholder="Area"
               placeholderTextColor="#BDBDBD"
+              onChangeText={setLocation}
             />
           </View>
 
