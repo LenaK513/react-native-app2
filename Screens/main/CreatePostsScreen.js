@@ -42,11 +42,11 @@ const CreatePostsScreen = ({ navigation }) => {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
     let location = await Location.getCurrentPositionAsync({});
-    // const coords = {
-    //   latitude: location.coords.latitude,
-    //   longitude: location.coords.longitude,
-    // };
-    setLocation(location);
+    const coords = {
+      latitude: location.coords.latitude,
+      longitude: location.coords.longitude,
+    };
+    setLocation(coords);
   };
 
   const sendPicture = async () => {
