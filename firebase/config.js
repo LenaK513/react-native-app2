@@ -4,18 +4,17 @@ import { getStorage } from "firebase/storage";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCdV3G8UQTL3YG-BA7g2yhiJZRBX39oJXw",
-  authDomain: "react-native-app2-9f8c2.firebaseapp.com",
-  projectId: "react-native-app2-9f8c2",
-  storageBucket: "react-native-app2-9f8c2.appspot.com",
-  messagingSenderId: "361367960663",
-  appId: "1:361367960663:web:4c322c57fe3bbfdba83712",
-  measurementId: "G-10GX68T6VH",
+  apiKey: "AIzaSyAqnVUtg43LpsUG3kMt9T7vptFpyM8bqdg",
+  authDomain: "react-native-app2-f90d1.firebaseapp.com",
+  projectId: "react-native-app2-f90d1",
+  storageBucket: "react-native-app2-f90d1.appspot.com",
+  messagingSenderId: "93824614199",
+  appId: "1:93824614199:web:5ff0f14962700c5d3a24b2",
 };
 
-const db = initializeApp(firebaseConfig);
-const auth = getAuth(db);
-const storage = getStorage(db);
-const app = getFirestore(db);
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const storage = getStorage();
+const db = getFirestore(app);
 
-export { auth, storage, app };
+export { auth, storage, db };

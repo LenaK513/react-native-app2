@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { useSelector } from "react-redux";
 import { collection, addDoc } from "firebase/firestore";
-import { storage, app } from "../../firebase/config";
+import { storage, db } from "../../firebase/config";
 import { Camera } from "expo-camera";
 import * as Location from "expo-location";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
@@ -41,13 +41,12 @@ const CreatePostsScreen = ({ navigation }) => {
     console.log("location", location);
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
-    // let location = await Location.getCurrentPositionAsync({});
-    // const { latitude, longitude } = location.coords;
-    //  const coords = {
-    //    latitude: location.coords.latitude,
+    let location = await Location.getCurrentPositionAsync({});
+    // const coords = {
+    //   latitude: location.coords.latitude,
     //   longitude: location.coords.longitude,
-    //  };
-    // setLocation(location.coords);
+    // };
+    setLocation(location);
   };
 
   const sendPicture = async () => {
@@ -57,19 +56,15 @@ const CreatePostsScreen = ({ navigation }) => {
 
   const uploadPostToServer = async () => {
     try {
-      const location = await Location.getCurrentPositionAsync({});
-      const { latitude, longitude } = location.coords;
-
-      setLocation(location.coords);
       const photo = await uploadPhotoToServer();
-      const docRef = await addDoc(collection(app, "posts"), {
+      const docRef = await addDoc(collection(db, "posts"), {
         image: photo,
-        // location: { latitude, longitude },
+        location: location,
         login,
         userId,
         comment,
       });
-      console.log("docRef", docRef);
+      console.log("docRef", docRef.id);
     } catch (error) {
       console.error("Error adding document: ", error.message);
     }
