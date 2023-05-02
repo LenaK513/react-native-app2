@@ -36,7 +36,9 @@ const PostsScreen = ({ route, navigation }) => {
             </Text>
             <Text
               title="go to map"
-              onPress={() => navigation.navigate("MapScreen")}
+              onPress={() =>
+                navigation.navigate("MapScreen", { location: item.location })
+              }
             >
               <AntDesign name="enviromento" size={24} color="black" />
             </Text>

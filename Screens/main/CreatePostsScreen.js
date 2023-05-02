@@ -46,6 +46,7 @@ const CreatePostsScreen = ({ navigation }) => {
       setHasPermission(status === "granted");
     })();
   }, []);
+
   if (hasPermission === null) {
     return <View />;
   }
@@ -57,16 +58,17 @@ const CreatePostsScreen = ({ navigation }) => {
     const photo = await camera.takePictureAsync();
     setPhoto(photo.uri);
 
-    console.log("location", location);
-    console.log("comment", comment);
-    let location = await Location.getCurrentPositionAsync({});
+    let location = await Location.getCurrentPositionAsync({
+      accuracy: Location.Accuracy.Highest,
+      maximumAge: 10000,
+    });
     const coords = {
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
     };
     setLocation(coords);
   };
-
+  console.log(location);
   const sendPicture = async () => {
     uploadPostToServer();
     navigation.navigate("PostsScreen", { photo });
@@ -77,7 +79,7 @@ const CreatePostsScreen = ({ navigation }) => {
       const photo = await uploadPhotoToServer();
       const docRef = await addDoc(collection(db, "posts"), {
         photo: photo,
-        location,
+        location: location,
         login,
         userId,
         comment,
