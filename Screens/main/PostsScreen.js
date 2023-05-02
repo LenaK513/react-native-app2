@@ -2,15 +2,21 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList, Image, Button } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase/config";
 
 const PostsScreen = ({ route, navigation }) => {
   const [posts, setPosts] = useState([]);
+
+  const getAllPost = async () => {
+    const allPosts = await getDocs(collection(db, "posts"));
+    setPosts(allPosts.docs.map((doc) => ({ ...doc.data(), id: doc.id })));
+  };
+
   useEffect(() => {
-    if (route.params) {
-      setPosts((prevState) => [...prevState, route.params]);
-    }
-  }, [route.params]);
-  console.log("posts", posts);
+    getAllPost();
+  }, []);
+
   return (
     <View style={styles.container}>
       <FlatList
