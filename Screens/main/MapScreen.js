@@ -3,23 +3,29 @@ import { Text, StyleSheet, View } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 const MapScreen = ({ route }) => {
   console.log("route.params.location", route.params.location);
-  // const { longitude, latitude } = route.params.location;
+  const { longitude, latitude } = route.params.location;
   return (
     <View style={styles.container}>
       <MapView
         style={{ flex: 1 }}
         initialRegion={{
-          latitude: 50.4591,
-          longitude: 30.4903,
-          // longitude,
-          // latitude,
+          // latitude: 50.4591,
+          // longitude: 30.4903,
+          longitude,
+          latitude,
           latitudeDelta: 0.001,
           longitudeDelta: 0.006,
         }}
+        mapType="standard"
+        minZoomLevel={15}
+        onMapReady={() => console.log("Map is ready")}
+        onRegionChange={() => console.log("Region change")}
+        onPress={(e) => console.log(e.nativeEvent.coordinate)}
       >
         <Marker
-          coordinate={{ latitude: 50.4591, longitude: 30.4903 }}
-          // coordinate={{ latitude, longitude }}
+          description="Hello"
+          // coordinate={{ latitude: 50.4591, longitude: 30.4903 }}
+          coordinate={{ latitude, longitude }}
           title="work"
         />
       </MapView>
