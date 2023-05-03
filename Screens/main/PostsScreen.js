@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Image, Button } from "react-native";
+import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { collection, getDocs } from "firebase/firestore";
@@ -28,6 +28,9 @@ const PostsScreen = ({ route, navigation }) => {
               source={{ uri: item.photo }}
               style={{ width: 350, height: 200 }}
             />
+            <View style={{ alignSelf: "flex-start", marginLeft: 30 }}>
+              <Text style={styles.titleText}>{item.comment}</Text>
+            </View>
             <Text
               title="go to Comments"
               onPress={() => navigation.navigate("CommentsScreen")}
@@ -60,6 +63,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginBottom: 15,
+  },
+  titleText: {
+    fontFamily: "r-bold",
+    fontSize: 16,
+    color: "#121212",
+    lineHeight: 18.75,
   },
 });
 
