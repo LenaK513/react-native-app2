@@ -33,7 +33,9 @@ const PostsScreen = ({ route, navigation }) => {
             </View>
             <Text
               title="go to Comments"
-              onPress={() => navigation.navigate("CommentsScreen")}
+              onPress={() =>
+                navigation.navigate("CommentsScreen", { postId: item.id })
+              }
             >
               <Feather name="message-circle" size={24} color="black" />
             </Text>
