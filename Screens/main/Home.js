@@ -1,4 +1,5 @@
 import React from "react";
+import { TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Text, StyleSheet } from "react-native";
@@ -10,10 +11,18 @@ import CreatePostsScreen from "./CreatePostsScreen";
 import MapScreen from "./MapScreen";
 import PostsScreen from "./PostsScreen";
 import ProfileScreen from "./ProfileScreen";
+import { useDispatch } from "react-redux";
 
+import { authSignOutUser } from "../../redux/auth/authOperations";
 const MainTab = createBottomTabNavigator();
 
 const Home = () => {
+  const dispatch = useDispatch();
+
+  const signOut = () => {
+    dispatch(authSignOutUser());
+  };
+
   return (
     <MainTab.Navigator
       initialRouteName="PostsScreen"
@@ -51,12 +60,14 @@ const Home = () => {
           headerTitleAlign: "center",
 
           headerRight: () => (
-            <Ionicons
-              name="exit-outline"
-              size={24}
-              color="grey"
-              style={{ marginRight: 5 }}
-            />
+            <TouchableOpacity style={styles.btn} onPress={signOut}>
+              <Ionicons
+                name="exit-outline"
+                size={24}
+                color="grey"
+                style={{ marginRight: 5 }}
+              />
+            </TouchableOpacity>
           ),
         }}
       />
@@ -111,7 +122,20 @@ const Home = () => {
     </MainTab.Navigator>
   );
 };
-
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "transarent",
+  },
+  btn: {},
+  btnText: {
+    fontFamily: "r-regular",
+    fontSize: 16,
+    lineHeight: 18.75,
+    color: "#ffffff",
+  },
+});
 export default Home;
 
 // import { Feather } from "@expo/vector-icons";

@@ -11,7 +11,7 @@ import {
 import { useSelector } from "react-redux";
 import { db } from "../../firebase/config";
 import { addDoc, collection, getDocs } from "firebase/firestore";
-
+import { AntDesign } from "@expo/vector-icons";
 const CommentsScreen = ({ route }) => {
   const { postId } = route.params;
   const [comments, setComments] = useState("");
@@ -45,6 +45,7 @@ const CommentsScreen = ({ route }) => {
       setAllComments(
         allPosts.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
       );
+      setComments(comments);
     } catch (error) {
       console.log("error", error.message);
     }
@@ -57,15 +58,15 @@ const CommentsScreen = ({ route }) => {
           data={allComments}
           renderItem={({ item }) => (
             <View style={styles.commentContainer}>
-              <Text>{item.login}</Text>
-              <Text>{item.comments}</Text>
+              <Text>{item.comment.login}</Text>
+              <Text>{item.comment.comments}</Text>
             </View>
           )}
           keyExtractor={(item) => item.id}
         />
       </SafeAreaView>
       <TextInput
-        style={styles.inputArea}
+        style={styles.input}
         placeholder="write a comment"
         placeholderTextColor="#BDBDBD"
         value={comments}
@@ -73,7 +74,7 @@ const CommentsScreen = ({ route }) => {
       />
 
       <TouchableOpacity style={styles.btn} onPress={createPost}>
-        <Text style={styles.btnText}> add post</Text>
+        <AntDesign name="arrowup" size={24} color="white" />
       </TouchableOpacity>
     </View>
   );
@@ -84,41 +85,39 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     backgroundColor: "#fff",
+    paddingHorizontal: 16,
   },
   commentContainer: {
     borderWidth: 1,
-    borderColor: "#20b2aa",
-    marginHorizontal: 10,
+    borderColor: "transparent",
+    backgroundColor: "rgba(0,0,0,0.06)",
+
     padding: 10,
     marginBottom: 10,
+    borderRadius: 6,
   },
   input: {
     fontFamily: "r-regular",
     fontSize: 16,
     height: 50,
-    borderBottomWidth: 1,
-    borderColor: "#E8E8E8",
+    backgroundColor: "#F6F6F6",
+    borderColor: "transparent",
+    borderRadius: 8,
+    borderStyle: "solid",
+    borderWidth: 1,
     lineHeight: 18.75,
-    padding: 16,
+    paddingLeft: 20,
+    marginBottom: 20,
   },
-  inputArea: {
-    fontFamily: "r-regular",
-    fontSize: 16,
-    height: 50,
-    borderBottomWidth: 1,
-    borderColor: "#E8E8E8",
-    lineHeight: 18.75,
-    paddingLeft: 40,
-    position: "relative",
-  },
+
   btn: {
-    height: 51,
+    position: "absolute",
+    bottom: 22,
+    right: 20,
     backgroundColor: "#FF6C00",
-    borderRadius: 100,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 43,
-    marginBottom: 16,
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderRadius: "50%",
   },
   btnText: {
     fontFamily: "r-regular",
