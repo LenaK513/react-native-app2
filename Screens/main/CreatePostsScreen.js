@@ -68,7 +68,6 @@ const CreatePostsScreen = ({ navigation }) => {
     };
     setLocation(coords);
   };
-  console.log(location);
 
   const sendPicture = async () => {
     uploadPostToServer();

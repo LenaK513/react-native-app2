@@ -26,14 +26,13 @@ const initialState = {
 export default function RegistrationScreen({ navigation }) {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(initialState);
-  // const [login, setLogin] = useState("");
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
   const [dimensions, setdimensions] = useState(Dimensions.get("window"));
   const [isInputFocusedLogin, setIsInputFocusedLogin] = useState(false);
   const [isInputFocusedEmail, setIsInputFocusedEmail] = useState(false);
   const [isInputFocusedPassword, setIsInputFocusedPassword] = useState(false);
-
+  // const [login, setLogin] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -89,6 +88,10 @@ export default function RegistrationScreen({ navigation }) {
               }}
             >
               <View style={styles.photoBox}>
+                <Image
+                  style={styles.userAvatar}
+                  source={require("../../../assets/images/user.png")}
+                />
                 <Image
                   style={styles.iconImage}
                   source={require("../../../assets/images/add.png")}
@@ -200,7 +203,7 @@ const styles = StyleSheet.create({
     width: 120,
     height: 120,
     backgroundColor: "#F6F6F6",
-    borderRadius: 16,
+    borderRadius: 28,
     alignSelf: "center",
     left: "50%",
     top: 0,
@@ -278,6 +281,5 @@ const styles = StyleSheet.create({
     color: "#1B4371",
     textAlign: "center",
     lineHeight: 19,
-    // marginBottom: 45,
   },
 });

@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FF6C00",
     paddingHorizontal: 10,
     paddingVertical: 10,
-    borderRadius: "50%",
+    borderRadius: 50,
   },
   btnText: {
     fontFamily: "r-regular",

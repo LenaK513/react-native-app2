@@ -1,20 +1,61 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  FlatList,
+  Image,
+  SafeAreaView,
+} from "react-native";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { auth } from "../../firebase/config";
 import { signOut } from "firebase/auth";
-import { useDispatch } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { db } from "../../firebase/config";
 import { authSignOutUser } from "../../redux/auth/authOperations";
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
+  const [userPosts, setUserPosts] = useState([]);
+  const { userId } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    getUserPosts();
+  }, []);
+
+  const getUserPosts = async () => {
+    try {
+      const postList = query(
+        collection(db, "posts"),
+        where("userId", "==", userId)
+      );
+      const querySnapshot = await getDocs(postList);
+      setUserPosts(
+        querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+      );
+    } catch (error) {
+      console.log("error", error.message);
+    }
+  };
 
   const signOut = () => {
     dispatch(authSignOutUser());
   };
   return (
     <View style={styles.container}>
-      <Text>Profile screen</Text>
+      <FlatList
+        data={userPosts}
+        keyExtractor={(item, indx) => indx.toString()}
+        renderItem={({ item }) => (
+          <View style={styles.imagesContainer}>
+            <Image
+              source={{ uri: item.photo }}
+              style={{ width: 350, height: 200 }}
+            />
+          </View>
+        )}
+      />
       <TouchableOpacity style={styles.btn} onPress={signOut}>
         <Text style={styles.btnText}>signOut</Text>
       </TouchableOpacity>
@@ -27,6 +68,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     backgroundColor: "transarent",
+  },
+  imagesContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 15,
   },
   btn: {
     height: 51,
